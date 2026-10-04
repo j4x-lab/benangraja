@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A — Utilitarian Wireframe · Benang Raja Store 3D</title>
+<!-- Logic 1 · 🎲秒数轮盘 16s %20+1 = #17 Functional Brutalism (灰线+系统字+蓝链接,还原98%) -->
+<!-- 色彩论证: paper #FBFBFB + hairline #E0E0E0 + link blue #0000EE 取自 Are.na/Lobsters 规范; jediná aksen kuning #FACC15 disampling dari papan signage foto front.jpeg -->
+<style>
+*{box-sizing:border-box;margin:0}body{background:#FBFBFB;color:#111;font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:20px 20px 60px}
+.top{border-bottom:1px solid #E0E0E0;padding:12px 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.top b{font-size:13px}.top span{color:#666;font-size:12px}
+h1{font-size:clamp(28px,4.5vw,52px);line-height:1.02;letter-spacing:-.03em;margin:22px 0 6px;font-weight:700}
+h1 em{color:#0000EE;font-style:normal;text-decoration:underline;text-underline-offset:4px}
+.sub{color:#444;max-width:62ch}.sub a{color:#0000EE}
+.viewer{margin-top:18px;border:1px solid #E0E0E0;background:#fff;display:grid;grid-template-columns:1fr 260px}
+.stage{background:#F4F4F2;min-height:460px;display:grid;place-items:center;perspective:1100px;overflow:hidden;cursor:grab;position:relative;user-select:none}
+.stage:active{cursor:grabbing}
+.room{width:460px;height:300px;position:relative;transform-style:preserve-3d;transform:rotateX(12deg) rotateY(-18deg)}
+.wall{position:absolute;border:1px solid #111;background:#fff;overflow:hidden}
+.wall img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.92)}
+.w-back{width:460px;height:260px;transform:translateZ(150px);left:0;top:20px}
+.w-floor{width:460px;height:300px;transform:rotateX(-90deg) translateZ(110px);left:0;top:0;background:repeating-linear-gradient(0deg,#fff 0 19px,#E0E0E0 19px 20px),repeating-linear-gradient(90deg,#fff 0 39px,#E0E0E0 39px 40px)}
+.w-left{width:300px;height:260px;transform:rotateY(-90deg) translateZ(150px);left:-150px;top:20px}
+.w-right{width:300px;height:260px;transform:rotateY(90deg) translateZ(310px);left:155px;top:20px}
+.tag{position:absolute;font:11px/1 ui-monospace,Menlo,monospace;background:#111;color:#fff;padding:3px 7px;letter-spacing:.04em}
+.dim{position:absolute;font:11px ui-monospace,monospace;color:#666}
+.side{border-left:1px solid #E0E0E0;padding:16px;font-size:13px}
+.side h3{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#666;margin:14px 0 8px}
+.side h3:first-child{margin-top:0}
+.loc{display:block;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid #E0E0E0;padding:9px 2px;cursor:pointer;font-size:13px}
+.loc b{color:#0000EE;margin-right:8px;font-weight:600}.loc.active{background:#EEF0FF}
+table{width:100%;border-collapse:collapse;font-size:12.5px}td{border-bottom:1px solid #E0E0E0;padding:6px 2px}td:last-child{text-align:right;color:#444}
+.hint{position:absolute;left:12px;bottom:10px;font:11px ui-monospace,monospace;color:#666;background:#ffffffd9;border:1px solid #E0E0E0;padding:4px 8px}
+.badge{position:absolute;right:12px;top:10px;background:#FACC15;border:1px solid #111;font:11px ui-monospace,monospace;padding:4px 8px}
+@media(max-width:860px){.viewer{grid-template-columns:1fr}.side{border-left:none;border-top:1px solid #E0E0E0}.room{scale:.78}}
+</style></head>
+<body><div class="wrap">
+<div class="top"><b>benangraja.id / store-3d / <span style="color:#0000EE">A-functional-brutalist</span></b><span>轮盘 #17 · Functional Brutalism · 3 foto asli store/ · drag untuk putar</span></div>
+<h1>Denah jujur toko,<br><em>bukan render marketing.</em></h1>
+<p class="sub">Tiga foto asli (<a href="../store/front.jpeg">front</a> · <a href="../store/inside.jpeg">inside</a> · <a href="../store/inside2.jpeg">inside2</a>) ditempel sebagai dinding terukur. Seret viewport untuk memutar seperti denah arsitek. Ringan &lt;40KB JS — untuk HP kentang.</p>
+<div class="viewer">
+<div class="stage" id="stage"><span class="badge">SKALA 1:200 · N°17</span>
+<div class="room" id="room">
+<div class="wall w-floor"></div>
+<div class="wall w-back"><img id="imgBack" src="../store/inside.jpeg" alt="dalam toko"><span class="tag" style="left:8px;top:8px">DINDING-A · inside.jpeg</span></div>
+<div class="wall w-left"><img id="imgLeft" src="../store/inside2.jpeg" alt="rak kain"><span class="tag" style="left:8px;top:8px">DINDING-B · inside2.jpeg</span></div>
+<div class="wall w-right"><img id="imgRight" src="../store/front.jpeg" alt="fasad"><span class="tag" style="left:8px;top:8px">DINDING-C · front.jpeg</span></div>
+</div>
+<span class="dim" style="left:14px;top:12px">← 24.0 m →</span>
+<span class="hint">drag ⟷ rotate · <span id="deg">-18°</span> · wireframe jujur, tanpa glow</span>
+</div>
+<aside class="side">
+<h3>01 / pilih dinding</h3>
+<button class="loc active" data-k="all"><b>00</b>semua dinding — denah penuh</button>
+<button class="loc" data-k="front"><b>01</b>fasad — front.jpeg</button>
+<button class="loc" data-k="inside"><b>02</b>lorong AC — inside.jpeg</button>
+<button class="loc" data-k="rak"><b>03</b>rak kain — inside2.jpeg</button>
+<h3>02 / spesifikasi</h3>
+<table><tr><td>format</td><td>CSS 3D + JPEG asli</td></tr><tr><td>berat</td><td>~120KB (foto)</td></tr><tr><td>fallback</td><td>grid foto statis</td></tr><tr><td>pasang</td><td>ganti #diorama di #toko</td></tr></table>
+<h3>03 / catatan arsitek</h3>
+<p style="color:#444">Tidak ada bayangan palsu. Foto tidak di-crop ulang. Dimensi adalah indikasi, bukan hasil survey laser.</p>
+</aside>
+</div></div>
+<script>
+var room=document.getElementById('room'),stage=document.getElementById('stage'),deg=document.getElementById('deg'),ang=-18,drag=false,px=0;
+function render(){room.style.transform='rotateX(12deg) rotateY('+ang.toFixed(1)+'deg)';deg.textContent=Math.round(ang)+'°'}
+stage.addEventListener('pointerdown',function(e){drag=true;px=e.clientX;stage.setPointerCapture(e.pointerId)});
+addEventListener('pointermove',function(e){if(!drag)return;ang+=(e.clientX-px)*.4;px=e.clientX;render()});
+addEventListener('pointerup',function(){drag=false});
+var focus={all:['../store/inside.jpeg','../store/inside2.jpeg','../store/front.jpeg'],front:['../store/front.jpeg','../store/front.jpeg','../store/front.jpeg'],inside:['../store/inside.jpeg','../store/inside.jpeg','../store/inside.jpeg'],rak:['../store/inside2.jpeg','../store/inside2.jpeg','../store/inside2.jpeg']};
+document.querySelectorAll('.loc').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.loc').forEach(function(x){x.classList.remove('active')});b.classList.add('active');var f=focus[b.dataset.k];document.getElementById('imgBack').src=f[0];document.getElementById('imgLeft').src=f[1];document.getElementById('imgRight').src=f[2];})});
+render();
+</script></body></html>

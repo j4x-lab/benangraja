@@ -1,0 +1,57 @@
+/* BENANG RAJA — store-3d (mix B+C): tur foto Matterport-style + miniatur CSS-3D, bahasa visual Neri&Hu hitam-kuningan */
+.store3d{border-radius:20px;background:radial-gradient(100% 100% at 50% 0%,#2b241c,#100d0a 72%);border:1px solid rgba(212,162,78,.45);overflow:hidden;color:#efe7d3}
+.s3-tabs{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid rgba(212,162,78,.25);flex-wrap:wrap}
+.s3-tab{background:transparent;border:1px solid rgba(239,231,211,.3);color:#efe7d3;border-radius:999px;padding:8px 18px;font-size:.8rem;letter-spacing:.06em;cursor:pointer}
+.s3-tab.on{background:#d8b45a;border-color:#d8b45a;color:#171207;font-weight:700}
+.s3-scan{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:#a89a7c}
+.s3-dn{margin-left:auto;background:transparent;border:1px solid rgba(239,231,211,.3);color:#efe7d3;border-radius:999px;padding:8px 16px;font-size:.78rem;cursor:pointer}
+.s3-view{display:none}
+.s3-view.on{display:block}
+/* ── tur ── */
+.s3-tour{position:relative;height:min(66vh,560px);min-height:380px;overflow:hidden;cursor:grab;user-select:none;touch-action:pan-y}
+.s3-tour:active{cursor:grabbing}
+.s3-pano{position:absolute;inset:-7%;background-size:cover;background-position:center;will-change:transform;transition:background-image .45s ease}
+.s3-night{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 20%,rgba(255,205,120,.14),rgba(4,3,8,.62));opacity:0;transition:opacity .5s;pointer-events:none}
+.store3d.night .s3-night{opacity:1}
+.store3d.night .s3-pano{filter:brightness(.82) saturate(1.05)}
+.s3-vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 52%,rgba(0,0,0,.6));pointer-events:none}
+.s3-hot{position:absolute;min-width:38px;height:38px;border-radius:999px;border:2px solid #fff;background:rgba(216,180,90,.92);color:#171207;font-weight:800;font-size:1rem;display:flex;align-items:center;gap:8px;padding:0 8px;cursor:pointer;animation:s3pulse 2s infinite;z-index:3}
+.s3-hot span{font-size:.68rem;font-weight:600;letter-spacing:.04em;white-space:nowrap}
+@keyframes s3pulse{0%{box-shadow:0 0 0 0 rgba(216,180,90,.55)}70%{box-shadow:0 0 0 14px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.s3-cap{position:absolute;left:16px;bottom:76px;max-width:min(480px,80%);background:rgba(10,8,6,.72);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:12px 16px;backdrop-filter:blur(8px);z-index:2}
+.s3-cap b{font-family:Cormorant,Georgia,serif;font-weight:600;font-size:1.35rem;display:block;line-height:1.15}
+.s3-cap span{font-size:.82rem;color:#cfc5ab}
+.s3-count{position:absolute;right:16px;top:14px;background:rgba(10,8,6,.7);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:5px 14px;font-size:.72rem;letter-spacing:.14em;z-index:2}
+.s3-ctrl{position:absolute;left:16px;right:16px;bottom:14px;display:flex;gap:10px;align-items:center;z-index:2}
+.s3-thumb{width:88px;height:58px;object-fit:cover;border-radius:10px;border:2px solid transparent;cursor:pointer;opacity:.7;padding:0;background:none}
+.s3-thumb.on{border-color:#d8b45a;opacity:1}
+.s3-arrow{margin-left:auto;background:#d8b45a;border:none;border-radius:999px;padding:10px 18px;font-weight:700;cursor:pointer;color:#171207;font-size:.85rem}
+.s3-arrow.ghost{background:transparent;color:#efe7d3;border:1px solid rgba(239,231,211,.4);margin-left:0}
+/* ── miniatur ── */
+.s3-mini{padding:26px 16px 20px}
+.s3-stage{height:380px;display:grid;place-items:center;perspective:1300px;overflow:hidden;cursor:grab;user-select:none;touch-action:pan-y}
+.s3-stage:active{cursor:grabbing}
+.s3-cube{width:min(440px,72vw);height:min(280px,44vw);position:relative;transform-style:preserve-3d}
+.s3-cube .f{position:absolute;overflow:hidden;border:1px solid rgba(216,180,90,.65);background:#14110c;margin:0}
+.s3-cube .f img{width:100%;height:100%;object-fit:cover;display:block}
+.s3-cube .front{inset:0;transform:translateZ(110px)}
+.s3-cube .back{inset:0;transform:rotateY(180deg) translateZ(110px)}
+.s3-cube .right{top:0;bottom:0;left:50%;width:220px;margin-left:-110px;transform:rotateY(90deg) translateZ(220px)}
+.s3-cube .left{top:0;bottom:0;left:50%;width:220px;margin-left:-110px;transform:rotateY(-90deg) translateZ(220px);background:linear-gradient(#1d1712,#0f0c09);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.s3-cube .left b{letter-spacing:.3em;color:#e9dcc0;font-size:.85rem}
+.s3-cube .left span{font-size:.58rem;letter-spacing:.26em;color:#d8b45a;text-transform:uppercase}
+.s3-cube .top{left:0;right:0;top:50%;height:220px;margin-top:-110px;transform:rotateX(90deg) translateZ(140px);background:linear-gradient(#2a231a,#14110c)}
+.s3-cube .bottom{left:0;right:0;top:50%;height:220px;margin-top:-110px;transform:rotateX(-90deg) translateZ(140px);background:#0c0a08}
+.s3-cube .f figcaption{position:absolute;left:8px;bottom:8px;font-size:.6rem;letter-spacing:.18em;background:rgba(0,0,0,.65);padding:3px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.25)}
+.store3d.night .s3-cube .f img{filter:brightness(.8) saturate(1.05)}
+.s3-mini-cap{text-align:center;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#a89a7c;margin-top:14px}
+@media(max-width:640px){.s3-cap{bottom:86px}.s3-thumb{width:64px;height:46px}.s3-stage{height:300px}.s3-scan{display:none}}
+@media(prefers-reduced-motion:reduce){.s3-hot{animation:none}}
+/* ── tur video (intro.mp4) ── */
+.s3-tour{cursor:default}
+.s3-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+.store3d.night .s3-video{filter:brightness(.82) saturate(1.05)}
+.s3-play{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);width:76px;height:76px;border-radius:50%;border:2px solid #fff;background:rgba(216,180,90,.94);color:#171207;font-size:1.6rem;cursor:pointer;z-index:3;box-shadow:0 8px 40px rgba(0,0,0,.5)}
+.s3-play.hide{display:none}
+.s3-ch{background:rgba(10,8,6,.66);border:1px solid rgba(255,255,255,.25);color:#efe7d3;border-radius:10px;padding:10px 14px;font-size:.76rem;letter-spacing:.04em;cursor:pointer;backdrop-filter:blur(6px)}
+.s3-ch.on{border-color:#d8b45a;color:#d8b45a;font-weight:700}

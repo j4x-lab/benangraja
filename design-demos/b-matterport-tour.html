@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>B — Matterport Photo Tour · Benang Raja Store 3D</title>
+<!-- Logic 2 · 🏆现实参照: Matterport / IKEA Kreativ / Google Street View indoor — diverifikasi sebagai standar tur ritel -->
+<style>
+*{box-sizing:border-box;margin:0}body{background:#0B0B0C;color:#F5F1E8;font-family:Inter,system-ui,sans-serif}
+.bar{display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid #26262a}
+.dot{width:10px;height:10px;border-radius:50%;background:#FACC15;box-shadow:0 0 12px #FACC15}
+.bar small{color:#9a958a;letter-spacing:.14em;font-size:11px}
+.bar h2{font-family:Georgia,serif;font-weight:500;font-size:18px}
+.tour{position:relative;height:min(72vh,640px);overflow:hidden;background:#000;cursor:grab;user-select:none}
+.tour:active{cursor:grabbing}
+.pano{position:absolute;inset:-6%;background-size:cover;background-position:center;transition:background-image .5s ease;will-change:transform}
+.vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.55));pointer-events:none}
+.hot{position:absolute;width:34px;height:34px;border-radius:50%;border:2px solid #fff;background:#FACC15cc;color:#111;font-weight:800;display:grid;place-items:center;cursor:pointer;animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 #FACC1577}70%{box-shadow:0 0 0 14px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.lbl{position:absolute;bottom:64px;left:20px;background:#000000b8;border:1px solid #ffffff2e;padding:12px 16px;border-radius:12px;backdrop-filter:blur(8px)}
+.lbl b{font-family:Georgia,serif;font-size:22px;display:block}.lbl span{font-size:13px;color:#cfc9bb}
+.ctrl{position:absolute;bottom:16px;left:20px;right:20px;display:flex;gap:10px;align-items:center}
+.thumb{width:86px;height:58px;object-fit:cover;border-radius:8px;border:2px solid transparent;cursor:pointer;opacity:.75}
+.thumb.on{border-color:#FACC15;opacity:1}
+.navbtn{margin-left:auto;background:#FACC15;border:none;border-radius:999px;padding:10px 18px;font-weight:700;cursor:pointer}
+.meta{display:grid;grid-template-columns:1.2fr .8fr;gap:0;border-top:1px solid #26262a}
+.meta div{padding:22px}.meta div+div{border-left:1px solid #26262a}
+.meta h4{font-size:11px;letter-spacing:.16em;color:#9a958a;margin-bottom:10px}
+.meta p{font-size:14px;color:#d8d2c4}
+.kbd{display:inline-block;border:1px solid #444;border-radius:6px;padding:1px 8px;font-size:12px;margin-right:6px}
+@media(max-width:760px){.meta{grid-template-columns:1fr}.meta div+div{border-left:none;border-top:1px solid #26262a}}
+</style></head>
+<body>
+<div class="bar"><span class="dot"></span><div><small>MATTERPORT-STYLE TOUR · 3 SCAN ASLI</small><h2 id="title">01 — Fasad Cianjur</h2></div><small style="margin-left:auto">front.jpeg · inside.jpeg · inside2.jpeg</small></div>
+<div class="tour" id="tour">
+<div class="pano" id="pano"></div><div class="vig"></div>
+<button class="hot" id="h1" style="left:62%;top:42%">›</button>
+<button class="hot" id="h2" style="left:24%;top:58%;background:#fff">•</button>
+<div class="lbl"><b id="lname">Soft Opening — Jl. Prof Moch Yamin 35</b><span id="lsub">Eceran &amp; grosir harga pabrik · parkir luas · seret untuk melihat sekeliling</span></div>
+<div class="ctrl"><img class="thumb on" data-i="0" src="../store/front.jpeg"><img class="thumb" data-i="1" src="../store/inside.jpeg"><img class="thumb" data-i="2" src="../store/inside2.jpeg"><button class="navbtn" id="next">Scan berikutnya →</button></div>
+</div>
+<div class="meta"><div><h4>CARA PAKAI</h4><p><span class="kbd">seret</span> geser panorama &nbsp; <span class="kbd">titik kuning</span> pindah scan &nbsp; <span class="kbd">strip bawah</span> loncat lokasi. Di HP: usap satu jari. Foto 100% asli toko, tanpa render ulang.</p></div>
+<div><h4>ADAPTIF OTOMATIS</h4><p>Mode ini &lt;150KB JS. Di HP kentang, Ken Burns berhenti otomatis dan jadi swipe foto — tetap bisa “masuk toko”. Pasang: ganti isi <b>#diorama</b> di section <b>#toko</b>.</p></div></div>
+<script>
+var shots=[{t:'01 — Fasad Cianjur',n:'Soft Opening — Jl. Prof Moch Yamin 35',s:'Eceran & grosir harga pabrik · parkir luas · seret untuk melihat sekeliling',img:'../store/front.jpeg'},{t:'02 — Lorong Full-AC',n:'Wangi, bersih, full AC',s:'Ruang luas super nyaman — gantungan penuh pilihan kanan-kiri',img:'../store/inside.jpeg'},{t:'03 — Rak Kain',n:'Rak kain + fitting room',s:'Puluh motif hem & kain — coba langsung di fitting room belakang',img:'../store/inside2.jpeg'}];
+var i=0,pano=document.getElementById('pano'),tour=document.getElementById('tour');
+function show(n){i=(n+shots.length)%shots.length;pano.style.backgroundImage='url('+shots[i].img+')';document.getElementById('title').textContent=shots[i].t;document.getElementById('lname').textContent=shots[i].n;document.getElementById('lsub').textContent=shots[i].s;document.querySelectorAll('.thumb').forEach(function(t,k){t.classList.toggle('on',k===i)})}
+show(0);
+var x=0,y=0,tx=0,ty=0,drag=false,sx=0,sy=0;
+(function loop(){x+=(tx-x)*.08;y+=(ty-y)*.08;pano.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) scale(1.12)';requestAnimationFrame(loop)})();
+tour.addEventListener('pointerdown',function(e){drag=true;sx=e.clientX-tx;sy=e.clientY-ty;tour.setPointerCapture(e.pointerId)});
+addEventListener('pointermove',function(e){if(!drag)return;tx=Math.max(-90,Math.min(90,e.clientX-sx));ty=Math.max(-50,Math.min(50,e.clientY-sy))});
+addEventListener('pointerup',function(){drag=false});
+document.querySelectorAll('.thumb').forEach(function(t){t.addEventListener('click',function(){show(+t.dataset.i)})});
+document.getElementById('next').addEventListener('click',function(){show(i+1)});
+document.getElementById('h1').addEventListener('click',function(){show(i+1)});
+document.getElementById('h2').addEventListener('click',function(){show(i+2)});
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){tx=0;ty=0}
+</script></body></html>
